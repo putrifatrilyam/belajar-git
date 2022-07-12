@@ -1,16 +1,30 @@
+import random
 import os
 
-def make_commit(days : int):
-    if days < 1:
-      return os.system("git push")
-    else:
-        dates = f'{days} days ago'
-        with open('README.md', 'a') as f:
-            f.write(f'{dates}\n')
-# stagging 
-    os.system('git add .')
-    os.system('git commit --date="'+dates+' -m "first message"')
-    
-    return days * make_commit(days - 1)
+# zalgoification stolen from a code golf example, could I format this better? yes. will I? no.
+q=lambda z:''.join([v,v+''.join(random.choice(list(map(chr,range(768,815))))for i in range(int(random.normalvariate(10,5))))][v.isalpha()]for v in z)
 
-make_commit(7)
+# these messages taken from a list of most common commit messages
+messages=[
+	"initial commit",
+	"update readme.md",
+	"update",
+	"first commit",
+	"dummy",
+	"updated readme",
+	"pi push",
+	"create readme.md",
+	"fix",
+	"cleanup",
+	"test",
+	"typo",
+	"fuck",
+	"wip",
+	"bump version",
+	"updates"	
+]
+
+# I couldn't get the bash for loop to run in the github action, so... here we are.
+for n in range(random.randint(1, 360)):
+	message = q(random.choice(messages))
+	os.system(f'git commit -m "{message}" --allow-empty')
